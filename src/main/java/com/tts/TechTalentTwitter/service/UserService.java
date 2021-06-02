@@ -24,17 +24,17 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
-                       BCryptPasswordEncoder bCryptPasswordEncoder){
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User findByUsername(String username) {
+    public User findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return (List<User>) userRepository.findAll();
     }
 
@@ -48,14 +48,14 @@ public class UserService {
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userRepository.save(user);
-
     }
 
     public User getLoggedInUser() {
-        String loggedInUsername = SecurityContextHolder.
-                getContext().getAuthentication().getName();
+        String loggedInUsername = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
 
-        return findByUsername(loggedInUsername);
+        return findByUserName(loggedInUsername);
     }
 
 }
